@@ -18,5 +18,13 @@ func Provider() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{
 			"fusion_vm": resourceVm(),
 		},
+		ConfigureFunc: configureFunc(),
+	}
+}
+
+func configureFunc() func(*schema.ResourceData) (interface{}, error) {
+	return func(d *schema.ResourceData) (interface{}, error) {
+		client := fusionRest.NewClient(d.Get("api_key").(string))
+		return client, nil
 	}
 }
