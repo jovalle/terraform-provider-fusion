@@ -60,23 +60,6 @@ func resourceVmRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceVmUpdate(d *schema.ResourceData, m interface{}) error {
-	client := m.(*fusionRest.Client)
-	id := d.Id()
-	cpu := d.Get("cpu").(string)
-	memory := d.Get("memory").(string)
-
-	if d.HasChange("cpu") || d.HasChange("memory") {
-		v := &fusionRest.Vm{
-			Id:     id,
-			Cpu:    cpu,
-			Memory: memory,
-		}
-		err := client.UpdateVm(v)
-		if err != nil {
-			return err
-		}
-	}
-
 	return nil
 }
 
