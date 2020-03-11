@@ -13,6 +13,10 @@ func resourceVm() *schema.Resource {
 		Delete: resourceVmDelete,
 
 		Schema: map[string]*schema.Schema{
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"parent_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -23,9 +27,11 @@ func resourceVm() *schema.Resource {
 
 func resourceVmCreate(d *schema.ResourceData, m interface{}) error {
 	client := m.(*fusionRest.Client)
+	name := d.Get("name").(string)
 	parentId := d.Get("parent_id").(string)
 
 	newVm := &fusionRest.NewVm{
+		Name: name,
 		ParentId: parentId,
 	}
 
